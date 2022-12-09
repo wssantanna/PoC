@@ -1,0 +1,27 @@
+name: CI - Continous Integration
+
+on: 
+  pull_request: 
+    branches: 
+      - main
+  push:
+    branches: 
+      - develop
+
+jobs:
+  pipeline-ci: 
+    runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+          with: 
+            node-version: 16
+
+      - name: Testar aplicação
+        run: npm install && npm run test
+
+      - name: Enviar notificação
+        run: echo Teste concluído
+        
