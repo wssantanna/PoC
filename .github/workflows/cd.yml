@@ -1,0 +1,29 @@
+name: CD Continuos Deploy
+
+on: 
+  branches: 
+    - main
+    - homolog
+
+jobs:
+  pipeline-cd:
+  runs-on: ubuntu-latest
+  steps: 
+
+    - name: Identificar em qual branch devo fazer o Deploy
+      shell: bash
+      run: echo '##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})' 
+      id: branch
+
+    - name: Enviar a aplicação para o servidor
+      uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /root/apps/api/
+            
+    - name: Enviar notificação
+      run: echo Teste concluído

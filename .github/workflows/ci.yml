@@ -4,12 +4,13 @@ on:
   pull_request: 
     branches: 
       - main
+      - homolog
   push:
     branches: 
       - develop
 
 jobs:
-  pipeline-ci: 
+  pipeline-ci:
     runs-on: ubuntu-latest
       steps:
       - uses: actions/checkout@v3
